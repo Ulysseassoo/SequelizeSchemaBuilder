@@ -4,20 +4,23 @@ import { GlobalStyle } from "./Theme/global"
 import Home from "./Screens/Home"
 import Model from "./Screens/Model"
 import Sidebar from "./Components/Sidebar"
-import styled from "styled-components"
+import styled, { ThemeProvider } from "styled-components"
+import { lightTheme } from "./Theme/theme"
 
 function App() {
 	return (
-		<Main>
-			<GlobalStyle />
-			<Sidebar />
-			<BrowserRouter>
-				<Routes>
-					<Route path="/" element={<Home />} />
-					<Route path="/models/:id" element={<Model />} />
-				</Routes>
-			</BrowserRouter>
-		</Main>
+		<ThemeProvider theme={lightTheme}>
+			<Main>
+				<GlobalStyle />
+				<Sidebar theme={lightTheme} />
+				<BrowserRouter>
+					<Routes>
+						<Route path="/" element={<Home />} />
+						<Route path="/models/:id" element={<Model />} />
+					</Routes>
+				</BrowserRouter>
+			</Main>
+		</ThemeProvider>
 	)
 }
 
