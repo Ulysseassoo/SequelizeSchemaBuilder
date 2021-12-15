@@ -54,3 +54,13 @@ p, h1, h2, h3, h4, h5, h6 {
   isolation: isolate;
 }
 `
+
+export const Section = styled.section`
+	background-color: ${({ theme }) => theme.primary};
+	display: ${({ flex }) => flex};
+	align-items: ${({ center }) => center};
+	flex-direction: ${({ dir }) => dir};
+	justify-content: ${({ center }) => center};
+	height: 100%;
+	width: 100%;
+`

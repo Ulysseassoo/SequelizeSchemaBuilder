@@ -1,16 +1,25 @@
-import React from "react"
-import styled from "styled-components"
+import React, { useContext } from "react"
+import styled, { css } from "styled-components"
 import Category from "./Category"
 import { BsPlusSquareFill } from "react-icons/bs"
+import Card from "./Card"
+import { DataContext } from "../Provider/DataProvider"
 
 const Sidebar = () => {
+	const context = useContext(DataContext)
+	const { state } = context
+
 	return (
 		<Container>
 			<Title>Sequelize Builder</Title>
 			<Scroller>
-				<Category text="Models" Icon={BsPlusSquareFill} />
+				<Category text="Models" Icon={BsPlusSquareFill}>
+					{state.data.map((model) => {
+						return <Card key={model.id} id={model.id} />
+					})}
+				</Category>
 				<Category text="">
-					<Button>Export</Button>
+					<Button active={true}>Export</Button>
 				</Category>
 			</Scroller>
 		</Container>
@@ -20,7 +29,7 @@ const Sidebar = () => {
 const Container = styled.aside`
 	position: relative;
 	height: 100%;
-	width: 350px;
+	width: 450px;
 	padding: 0.75rem;
 	border-right: ${({ theme }) => `1px solid ${theme.borders}`};
 	background-color: ${({ theme }) => theme.primary};
@@ -53,6 +62,15 @@ const Button = styled.button`
 		background-color: ${({ theme }) => theme.text};
 		color: ${({ theme }) => theme.borders};
 	}
+	${({ active }) =>
+		active &&
+		css`
+			background-color: ${({ theme }) => theme.accent};
+			color: ${({ theme }) => "white"};
+			&:hover {
+				background-color: ${({ theme }) => theme.accentHover};
+			}
+		`}
 `
 
 export default Sidebar
