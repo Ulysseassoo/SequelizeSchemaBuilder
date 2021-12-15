@@ -15,7 +15,6 @@ const Model = () => {
 	let navigate = useNavigate()
 	useEffect(() => {
 		const model = state.data.filter((model) => model.id === parseInt(id))
-		console.log(model)
 		if (model.length === 0 || state.data.length === 0) {
 			navigate("/")
 			return
@@ -29,7 +28,7 @@ const Model = () => {
 	const [newName, setNewName] = useState(name)
 	useEffect(() => {
 		setNewName(name)
-	}, [])
+	}, [id])
 
 	const changeName = (input) => {
 		setNewName(input.target.value)
