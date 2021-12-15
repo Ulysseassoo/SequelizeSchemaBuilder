@@ -15,7 +15,7 @@ const Sidebar = () => {
 			<Scroller>
 				<Category text="Models" Icon={BsPlusSquareFill}>
 					{state.data.map((model) => {
-						return <Card key={model.id} id={model.id} />
+						return <Card key={model.id} id={model.id} title={model.name} />
 					})}
 				</Category>
 				<Category text="">
