@@ -5,6 +5,7 @@ import { DataContext } from "../Provider/DataProvider"
 import { Section } from "../Theme/global"
 import { FiEdit3 } from "react-icons/fi"
 import { IoIosOptions } from "react-icons/io"
+import Field from "../Components/Field"
 
 const Model = () => {
 	let params = useParams()
@@ -52,6 +53,15 @@ const Model = () => {
 					</Block>
 					<IoIosOptions />
 				</Top>
+				<Bottom>
+					<Left></Left>
+					<Right>
+						<Title>Add a new field</Title>
+						<FieldContainer>
+							<Field />
+						</FieldContainer>
+					</Right>
+				</Bottom>
 			</Container>
 		</Section>
 	)
@@ -62,6 +72,7 @@ const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 100%;
+	gap: 0.5rem;
 `
 const Name = styled.input``
 const Top = styled.div`
@@ -82,5 +93,34 @@ const Block = styled.div`
 	gap: 0.5rem;
 	color: ${({ theme }) => theme.textsecondary};
 	align-items: center;
+`
+const Bottom = styled.div`
+	display: flex;
+	height: calc(100vh - 100px);
+`
+const Left = styled.div`
+	width: 60%;
+	height: 100%;
+`
+const Right = styled.div`
+	min-width: 400px;
+	height: 100%;
+	background-color: ${({ theme }) => theme.borders};
+	border-radius: 0.2rem;
+	padding: 0.75rem;
+	display: flex;
+	flex-direction: column;
+`
+const Title = styled.p`
+	font-size: 1.4rem;
+	font-weight: bold;
+	padding: 1rem;
+`
+const FieldContainer = styled.div`
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	overflow-y: scroll;
+	padding: 1rem;
 `
 export default Model

@@ -1,5 +1,4 @@
-import React, { createContext, useEffect, useReducer } from "react"
-import { toast } from "react-toastify"
+import React, { createContext, useEffect, useMemo, useReducer } from "react"
 
 export const DataContext = createContext({
 	state: {},
@@ -44,7 +43,13 @@ export const DataProvider = (props) => {
 	}
 
 	const [state, dispatch] = useReducer(dataReducer, initialState)
-
+	const dataMemo = useMemo(
+		() => ({
+			state,
+			dispatch
+		}),
+		[state]
+	)
 	// useEffect(() => {
 	// 	const token = localStorage.getItem("token")
 	// 	if (!token) {
@@ -57,7 +62,7 @@ export const DataProvider = (props) => {
 		console.log(state)
 	}, [state])
 
-	return <DataContext.Provider value={{ state, dispatch }}>{props.children}</DataContext.Provider>
+	return <DataContext.Provider value={dataMemo}>{props.children}</DataContext.Provider>
 }
 
 export default DataProvider

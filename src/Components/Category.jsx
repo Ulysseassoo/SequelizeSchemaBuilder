@@ -26,7 +26,7 @@ const Category = ({ text, children, Icon }) => {
 			dispatch({ type: "new" })
 			return
 		}
-		return toast.error("You already created a Model called 'New'", {
+		return toast.error("A Model called 'New' already exists", {
 			position: "top-right",
 			autoClose: 5000,
 			hideProgressBar: true,

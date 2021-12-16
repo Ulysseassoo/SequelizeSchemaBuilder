@@ -1,6 +1,12 @@
 import styled, { createGlobalStyle } from "styled-components"
 
 export const GlobalStyle = createGlobalStyle`
+*,p,h1,h2,h3,h4,h5,span {
+  font-family: 'Lato', sans-serif;
+}
+
+
+
 /*
   1. Use a more-intuitive box-sizing model.
 */
