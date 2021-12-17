@@ -20,6 +20,15 @@ export const DataProvider = (props) => {
 					data: [...state.data, newModel]
 				}
 			}
+			case "add-property": {
+				const model = state.data.filter((element) => element.id == action.data.id)[0]
+				model.properties = { ...model.properties, ...action.data }
+				state.data[action.data.id] = model
+				return {
+					...state,
+					data: [...state.data]
+				}
+			}
 			case "update-name": {
 				const model = state.data.filter((element) => element.id == action.data.id)[0]
 				model.name = action.data.name

@@ -1,14 +1,13 @@
 import React from "react"
 import styled from "styled-components"
-import { BsCalendarDate } from "react-icons/bs"
 
-const Field = () => {
+const Field = ({ Icon, title, description }) => {
 	return (
 		<Container>
-			<BsCalendarDate />
+			{Icon && <Icon />}
 			<Content>
-				<Text>Datetime</Text>
-				<Description>A calendar date</Description>
+				<Text>{title}</Text>
+				<Description>{description}</Description>
 			</Content>
 		</Container>
 	)

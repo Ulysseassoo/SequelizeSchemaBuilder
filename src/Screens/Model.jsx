@@ -6,6 +6,7 @@ import { Section } from "../Theme/global"
 import { FiEdit3 } from "react-icons/fi"
 import { IoIosOptions } from "react-icons/io"
 import Field from "../Components/Field"
+import { Fields } from "../Data/Fields"
 
 const Model = () => {
 	let params = useParams()
@@ -58,7 +59,9 @@ const Model = () => {
 					<Right>
 						<Title>Add a new field</Title>
 						<FieldContainer>
-							<Field />
+							{Fields.map((field, index) => (
+								<Field Icon={field.Icon} title={field.title} description={field.description} key={field.title} />
+							))}
 						</FieldContainer>
 					</Right>
 				</Bottom>
@@ -122,5 +125,6 @@ const FieldContainer = styled.div`
 	flex-direction: column;
 	overflow-y: scroll;
 	padding: 1rem;
+	gap: 0.75rem;
 `
 export default Model
