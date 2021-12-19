@@ -12,7 +12,7 @@ export const DataProvider = (props) => {
 				const newModel = {
 					id: state.data.length,
 					name: "New",
-					properties: {},
+					properties: [],
 					required: []
 				}
 				return {
@@ -21,34 +21,19 @@ export const DataProvider = (props) => {
 				}
 			}
 			case "add-property": {
-				const model = state.data.filter((element) => element.id == action.data.id)[0]
-				model.properties = { ...model.properties, ...action.data }
-				state.data[action.data.id] = model
-				return {
-					...state,
-					data: [...state.data]
-				}
+				const data = state.data.map((item, i) => (item.id == action.id ? { ...item, properties: [...item.properties, action.data] } : item))
+
+				console.log(data)
+				return { ...state, data: data }
 			}
 			case "update-name": {
-				const model = state.data.filter((element) => element.id == action.data.id)[0]
-				model.name = action.data.name
-				state.data[action.data.id] = model
-				return {
-					...state,
-					data: [...state.data]
-				}
-			}
-			case "error": {
-				return {
-					...state,
-					error: action.error
-				}
+				const data = state.data.map((item, i) => (item.id === action.data.id ? { ...item, name: action.data.name } : item))
+				return { ...state, data: data }
 			}
 		}
 	}
 	const initialState = {
-		data: [],
-		error: null
+		data: []
 	}
 
 	const [state, dispatch] = useReducer(dataReducer, initialState)

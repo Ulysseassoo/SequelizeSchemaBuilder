@@ -7,6 +7,7 @@ import { FiEdit3 } from "react-icons/fi"
 import { IoIosOptions } from "react-icons/io"
 import Field from "../Components/Field"
 import { Fields } from "../Data/Fields"
+import Modal from "../Components/Modal"
 
 const Model = () => {
 	let params = useParams()
@@ -14,6 +15,8 @@ const Model = () => {
 	const context = useContext(DataContext)
 	const { state, dispatch } = context
 	const [editMode, setEditMode] = useState(false)
+	const [onOpen, setOnOpen] = useState(false)
+	const [selectedField, setSelectedField] = useState("")
 	let navigate = useNavigate()
 	useEffect(() => {
 		const model = state.data.filter((model) => model.id === parseInt(id))
@@ -38,13 +41,15 @@ const Model = () => {
 
 	const registerName = (element) => {
 		if (element.key === "Enter") {
-			dispatch({ type: "update-name", data: { id: id, name: newName } })
+			dispatch({ type: "update-name", data: { id: parseInt(id), name: newName } })
 			setEditMode(false)
 		}
 	}
 
 	return (
 		<Section flex="flex" dir="column">
+			{onOpen && <Modal setOnOpen={setOnOpen} field={selectedField} id={id} />}
+			{onOpen && <Overlay />}
 			<Container>
 				<Top>
 					<Block>
@@ -60,7 +65,14 @@ const Model = () => {
 						<Title>Add a new field</Title>
 						<FieldContainer>
 							{Fields.map((field, index) => (
-								<Field Icon={field.Icon} title={field.title} description={field.description} key={field.title} />
+								<Field
+									Icon={field.Icon}
+									title={field.title}
+									description={field.description}
+									key={field.title}
+									setOnOpen={setOnOpen}
+									setSelectedField={setSelectedField}
+								/>
 							))}
 						</FieldContainer>
 					</Right>
@@ -69,7 +81,14 @@ const Model = () => {
 		</Section>
 	)
 }
-
+const Overlay = styled.div`
+	width: 100%;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.4);
+	z-index: 10;
+	position: absolute;
+	inset: 0;
+`
 const Container = styled.div`
 	padding: 2rem;
 	display: flex;

@@ -1,9 +1,13 @@
 import React from "react"
 import styled from "styled-components"
 
-const Field = ({ Icon, title, description }) => {
+const Field = ({ Icon, title, description, setOnOpen, setSelectedField }) => {
 	return (
-		<Container>
+		<Container
+			onClick={() => {
+				setOnOpen(true)
+				setSelectedField(title)
+			}}>
 			{Icon && <Icon />}
 			<Content>
 				<Text>{title}</Text>
