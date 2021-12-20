@@ -4,7 +4,7 @@ import { AiOutlineCloseSquare } from "react-icons/ai"
 import { useForm } from "react-hook-form"
 import { DataContext } from "../Provider/DataProvider"
 
-const Modal = ({ field, setOnOpen, id }) => {
+const Modal = ({ field, setOnOpen, id, exported, data }) => {
 	const context = useContext(DataContext)
 	const { dispatch, state } = context
 	const {
@@ -21,6 +21,24 @@ const Modal = ({ field, setOnOpen, id }) => {
 	useEffect(() => {
 		setValue("type", field)
 	}, [])
+
+	if (exported) {
+		return (
+			<Container>
+				<Header>
+					<Title>Schema Result</Title>
+					<AiOutlineCloseSquare onClick={() => setOnOpen(false)} />
+				</Header>
+				<Body>
+					<Box>
+						<pre>
+							<code>{data}</code>
+						</pre>
+					</Box>
+				</Body>
+			</Container>
+		)
+	}
 	return (
 		<Container>
 			<Header>
@@ -31,10 +49,10 @@ const Modal = ({ field, setOnOpen, id }) => {
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<input type="text" placeholder="type" disabled={true} {...register("type", {})} />
 					<input type="text" placeholder="name" {...register("name", {})} />
-					<input type="text" placeholder="default value" {...register("default value", {})} />
+					<input type="text" placeholder="default value" {...register("defaultValue", {})} />
 					<input type="checkbox" {...register("required", {})} />
 					<input type="checkbox" {...register("null", {})} />
-					<input type="checkbox" {...register("primary key", {})} />
+					<input type="checkbox" {...register("primaryKey", {})} />
 					<input type="checkbox" {...register("unique", {})} />
 					<Button special type="submit">
 						Add
@@ -56,6 +74,14 @@ const Container = styled.div`
 	background: ${({ theme }) => theme.primary};
 	z-index: 99;
 	border-radius: 0.25rem;
+`
+
+const Box = styled.div`
+	padding: 1rem;
+	height: 200px;
+	background-color: ${({ theme }) => theme.borders};
+	overflow-y: scroll;
+	color: ${({ theme }) => theme.secondarytext};
 `
 
 const Header = styled.div`

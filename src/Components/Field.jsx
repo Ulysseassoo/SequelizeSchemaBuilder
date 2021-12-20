@@ -26,6 +26,7 @@ const Field = ({ Icon, title, description, setOnOpen, setSelectedField, isAdded,
 							{type && <Button>{type}</Button>}
 							{required && <Button>Required</Button>}
 							{unique && <Button>Unique</Button>}
+							{primaryKey && <Button>Primary Key</Button>}
 						</Flex>
 					</Left>
 					<RiDeleteBin5Line onClick={() => deleteField()} />
@@ -85,6 +86,7 @@ const Button = styled.div`
 	border-radius: 0.25rem;
 	font-size: 0.9rem;
 	box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+	user-select: none;
 `
 const Flex = styled.div`
 	display: flex;
@@ -100,6 +102,7 @@ const Content = styled.div`
 	${({ isAdded }) =>
 		isAdded &&
 		css`
+			user-select: none;
 			flex-direction: row;
 			justify-content: space-between;
 			align-items: center;

@@ -1,17 +1,31 @@
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import styled, { css } from "styled-components"
 import Category from "./Category"
 import { BsPlusSquareFill } from "react-icons/bs"
 import Card from "./Card"
 import { DataContext } from "../Provider/DataProvider"
+import Modal from "./Modal"
 
 const Sidebar = () => {
 	const context = useContext(DataContext)
 	const { state } = context
+	const [onOpen, setOnOpen] = useState(false)
 
-	// const generateSchema = () => {
-
-	// }
+	const generateSchema = () => {
+		let schema = []
+		state.data.forEach((model) => {
+			schema.push(`const ${model.name} = sequelize.define('${model.name}', {`)
+			model.properties.map((property) => {
+				schema.push(`${property.name}: {type: DataTypes.${property.type.toUpperCase()}`)
+				property.defaultValue && schema.push(`,\ndefaultValue:${property.defaultValue}`)
+				property.primaryKey && schema.push(`,\nprimaryKey:true`)
+				property.null && schema.push(`,\nallowNull:true`)
+				schema.push("}")
+			})
+			schema.push("}")
+		})
+		return JSON.stringify(schema.join(""))
+	}
 
 	return (
 		<Container>
@@ -23,9 +37,12 @@ const Sidebar = () => {
 					})}
 				</Category>
 				<Category text="">
-					<Button active={true}>Export</Button>
+					<Button active={true} onClick={() => setOnOpen(true)}>
+						Export
+					</Button>
 				</Category>
 			</Scroller>
+			{onOpen && <Modal exported setOnOpen={setOnOpen} data={generateSchema()} />}
 		</Container>
 	)
 }
