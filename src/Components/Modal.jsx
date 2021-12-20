@@ -6,7 +6,7 @@ import { DataContext } from "../Provider/DataProvider"
 
 const Modal = ({ field, setOnOpen, id }) => {
 	const context = useContext(DataContext)
-	const { dispatch } = context
+	const { dispatch, state } = context
 	const {
 		register,
 		handleSubmit,
@@ -15,7 +15,8 @@ const Modal = ({ field, setOnOpen, id }) => {
 	} = useForm()
 	const onSubmit = (data) => {
 		console.log(data)
-		dispatch({ type: "add-property", data: data, id: id })
+		const newData = { ...data, id: state.data[id].properties.length }
+		dispatch({ type: "add-property", data: newData, id: id })
 	}
 	useEffect(() => {
 		setValue("type", field)

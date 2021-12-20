@@ -26,6 +26,13 @@ export const DataProvider = (props) => {
 				console.log(data)
 				return { ...state, data: data }
 			}
+			case "delete-property": {
+				const data = state.data.map((item, i) =>
+					item.id == action.id ? { ...item, properties: item.properties.filter((element) => element.id !== action.property.id) } : item
+				)
+				console.log(data)
+				return { ...state, data: data }
+			}
 			case "update-name": {
 				const data = state.data.map((item, i) => (item.id === action.data.id ? { ...item, name: action.data.name } : item))
 				return { ...state, data: data }

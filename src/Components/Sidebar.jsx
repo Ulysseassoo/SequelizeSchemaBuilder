@@ -9,6 +9,10 @@ const Sidebar = () => {
 	const context = useContext(DataContext)
 	const { state } = context
 
+	// const generateSchema = () => {
+
+	// }
+
 	return (
 		<Container>
 			<Title>Sequelize Builder</Title>

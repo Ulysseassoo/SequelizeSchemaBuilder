@@ -60,7 +60,11 @@ const Model = () => {
 					<IoIosOptions />
 				</Top>
 				<Bottom>
-					<Left></Left>
+					<Left>
+						{state.data[id].properties.map((field, index) => (
+							<Field title={field.name} description={field.type} key={field.name} isAdded data={field} />
+						))}
+					</Left>
 					<Right>
 						<Title>Add a new field</Title>
 						<FieldContainer>
@@ -119,10 +123,14 @@ const Block = styled.div`
 const Bottom = styled.div`
 	display: flex;
 	height: calc(100vh - 100px);
+	gap: 2rem;
 `
 const Left = styled.div`
 	width: 60%;
 	height: 100%;
+	gap: 0.75rem;
+	display: flex;
+	flex-direction: column;
 `
 const Right = styled.div`
 	min-width: 400px;
