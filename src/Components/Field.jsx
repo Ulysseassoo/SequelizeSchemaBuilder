@@ -18,18 +18,19 @@ const Field = ({ Icon, title, description, setOnOpen, setSelectedField, isAdded,
 		}
 		return (
 			<Container isAdded>
-				<SiDatabricks />
 				<Content isAdded>
 					<Left>
-						<Text>{name}</Text>
-						<Flex>
-							{type && <Button>{type}</Button>}
-							{required && <Button>Required</Button>}
-							{unique && <Button>Unique</Button>}
-							{primaryKey && <Button>Primary Key</Button>}
-						</Flex>
+						<Text isAdded>{name}</Text>
 					</Left>
 					<RiDeleteBin5Line onClick={() => deleteField()} />
+				</Content>
+				<Content isAdded>
+					<Flex>
+						{type && <Button type>{type}</Button>}
+						{required && <Button>Required</Button>}
+						{unique && <Button>Unique</Button>}
+						{primaryKey && <Button>Primary Key</Button>}
+					</Flex>
 				</Content>
 			</Container>
 		)
@@ -50,7 +51,7 @@ const Field = ({ Icon, title, description, setOnOpen, setSelectedField, isAdded,
 }
 
 const Container = styled.div`
-	padding: 1rem;
+	padding: ${({ isAdded }) => (isAdded ? 0 : "1rem")};
 	display: flex;
 	align-items: center;
 	height: ${({ isAdded }) => (isAdded ? "100px" : "75px")};
@@ -58,9 +59,10 @@ const Container = styled.div`
 	border-radius: 0.25rem;
 	background-color: white;
 	box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-	gap: 1rem;
+	gap: ${({ isAdded }) => (isAdded ? 0 : "1rem")};
 	outline: transparent;
 	transition: 0.2s ease-in-out;
+	flex-direction: ${({ isAdded }) => (isAdded ? "column" : "row")};
 	cursor: pointer;
 	&:hover {
 		outline: 1px solid ${({ theme }) => theme.accent};
@@ -71,7 +73,8 @@ const Container = styled.div`
 `
 
 const Text = styled.p`
-	font-size: 1rem;
+	font-size: ${({ isAdded }) => (isAdded ? "1.3rem" : "1rem")};
+	font-weight: ${({ isAdded }) => (isAdded ? "bold" : "")};
 	color: ${({ theme }) => theme.textsecondary};
 `
 const Description = styled.p`
@@ -80,13 +83,16 @@ const Description = styled.p`
 	color: ${({ theme }) => theme.text};
 `
 const Button = styled.div`
-	padding: 0.25rem 0.5rem;
-	font-size: 0.5rem;
-	background-color: ${({ theme }) => theme.primary};
-	border-radius: 0.25rem;
-	font-size: 0.9rem;
-	box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+	padding: 0.4rem 0.8rem;
+	font-size: ${({ type }) => (type ? "0.6rem" : "0.5rem")};
+	color: ${({ type, theme }) => (type ? theme.text : theme.accent)};
+	text-transform: uppercase;
+	font-size: 0.75rem;
+	text-shadow: 1px 10px 3px rgba(0, 0, 0, 0.02);
 	user-select: none;
+	border-radius: 0.25rem;
+	background-color: ${({ theme }) => theme.primary};
+	border: ${({ theme }) => (theme ? `1px solid ${theme.borders}` : none)};
 `
 const Flex = styled.div`
 	display: flex;
@@ -94,7 +100,7 @@ const Flex = styled.div`
 `
 const Left = styled.div`
 	display: flex;
-	flex-direction: column;
+	gap: 1rem;
 `
 const Content = styled.div`
 	display: flex;
@@ -107,6 +113,10 @@ const Content = styled.div`
 			justify-content: space-between;
 			align-items: center;
 			width: 100%;
+			padding: 0.65rem;
+			&:first-child {
+				border-bottom: ${({ theme }) => `1px solid ${theme.borders}`};
+			}
 			& > svg {
 				color: #9c0000;
 				font-size: 1.3rem;

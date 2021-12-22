@@ -14,36 +14,38 @@ const Sidebar = () => {
 	const generateSchema = () => {
 		let schema = []
 		state.data.forEach((model) => {
-			schema.push(`const ${model.name} = sequelize.define('${model.name}', {`)
+			schema.push(`\n const ${model.name} = sequelize.define('${model.name}', { \n`)
 			model.properties.map((property) => {
-				schema.push(`${property.name}: {type: DataTypes.${property.type.toUpperCase()}`)
-				property.defaultValue && schema.push(`,\ndefaultValue:${property.defaultValue}`)
-				property.primaryKey && schema.push(`,\nprimaryKey:true`)
-				property.null && schema.push(`,\nallowNull:true`)
-				schema.push("}")
+				schema.push(`${property.name}: {\n type: DataTypes.${property.type.toUpperCase()}`)
+				property.defaultValue && schema.push(`,\ndefaultValue: ${property.defaultValue}`)
+				property.primaryKey && schema.push(`,\nprimaryKey: true`)
+				property.null && schema.push(`,\nallowNull: true`)
+				schema.push("\n } \n")
 			})
-			schema.push("}")
+			schema.push("})")
 		})
-		return JSON.stringify(schema.join(""))
+		return schema.join("")
 	}
 
 	return (
-		<Container>
-			<Title>Sequelize Builder</Title>
-			<Scroller>
-				<Category text="Models" Icon={BsPlusSquareFill}>
-					{state.data.map((model) => {
-						return <Card key={model.id} id={model.id} title={model.name} />
-					})}
-				</Category>
-				<Category text="">
-					<Button active={true} onClick={() => setOnOpen(true)}>
-						Export
-					</Button>
-				</Category>
-			</Scroller>
+		<>
 			{onOpen && <Modal exported setOnOpen={setOnOpen} data={generateSchema()} />}
-		</Container>
+			<Container>
+				<Title>Sequelize Builder</Title>
+				<Scroller>
+					<Category text="Models" Icon={BsPlusSquareFill}>
+						{state.data.map((model) => {
+							return <Card key={model.id} id={model.id} title={model.name} />
+						})}
+					</Category>
+					<Category text="">
+						<Button active={true} onClick={() => setOnOpen(true)}>
+							Export
+						</Button>
+					</Category>
+				</Scroller>
+			</Container>
+		</>
 	)
 }
 
