@@ -9,7 +9,6 @@ const Field = ({ Icon, title, description, setOnOpen, setSelectedField, isAdded,
 	let params = useParams()
 	const { id: modelID } = params
 	if (isAdded === true) {
-		console.log(data)
 		const { name, primaryKey, required, type, unique, id } = data
 		const context = useContext(DataContext)
 		const { dispatch } = context

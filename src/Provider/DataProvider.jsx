@@ -10,14 +10,15 @@ export const DataProvider = (props) => {
 		switch (action.type) {
 			case "new": {
 				const newModel = {
-					id: state.data.length,
+					id: state.counter,
 					name: "New",
 					properties: [],
 					required: []
 				}
 				return {
 					...state,
-					data: [...state.data, newModel]
+					data: [...state.data, newModel],
+					counter: state.counter + 1
 				}
 			}
 			case "delete-model": {
@@ -42,7 +43,8 @@ export const DataProvider = (props) => {
 		}
 	}
 	const initialState = {
-		data: []
+		data: [],
+		counter: 0
 	}
 
 	const [state, dispatch] = useReducer(dataReducer, initialState)

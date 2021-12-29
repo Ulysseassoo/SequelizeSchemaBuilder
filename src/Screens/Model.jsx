@@ -4,7 +4,6 @@ import styled from "styled-components"
 import { DataContext } from "../Provider/DataProvider"
 import { Section } from "../Theme/global"
 import { FiEdit3 } from "react-icons/fi"
-import { IoIosOptions } from "react-icons/io"
 import Field from "../Components/Field"
 import { Fields } from "../Data/Fields"
 import Modal from "../Components/Modal"
@@ -29,7 +28,7 @@ const Model = () => {
 	if (state.data.length === 0) {
 		return <div />
 	}
-	const { name } = state.data[id]
+	const { name, properties } = state.data.filter((model) => model.id === parseInt(id))[0]
 	const [newName, setNewName] = useState(name)
 	useEffect(() => {
 		setNewName(name)
@@ -48,7 +47,7 @@ const Model = () => {
 
 	return (
 		<Section flex="flex" dir="column">
-			{onOpen && <Modal setOnOpen={setOnOpen} field={selectedField} id={id} />}
+			{onOpen && <Modal setOnOpen={setOnOpen} field={selectedField} id={id} properties={properties} />}
 			{onOpen && <Overlay />}
 			<Container>
 				<Top>
@@ -67,7 +66,7 @@ const Model = () => {
 				</Top>
 				<Bottom>
 					<Left>
-						{state.data[id].properties.map((field, index) => (
+						{properties.map((field, index) => (
 							<Field title={field.name} description={field.type} key={field.name} isAdded data={field} />
 						))}
 					</Left>

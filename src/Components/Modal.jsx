@@ -4,7 +4,7 @@ import { AiOutlineCloseSquare } from "react-icons/ai"
 import { useForm } from "react-hook-form"
 import { DataContext } from "../Provider/DataProvider"
 
-const Modal = ({ field, setOnOpen, id, exported, data }) => {
+const Modal = ({ field, setOnOpen, id, exported, data, properties }) => {
 	const context = useContext(DataContext)
 	const { dispatch, state } = context
 	const {
@@ -15,7 +15,7 @@ const Modal = ({ field, setOnOpen, id, exported, data }) => {
 	} = useForm()
 	const onSubmit = (formData) => {
 		console.log(formData)
-		const newData = { ...formData, id: state.data[id].properties.length }
+		const newData = { ...formData, id: properties.length }
 		dispatch({ type: "add-property", data: newData, id: id })
 		setOnOpen(false)
 	}
