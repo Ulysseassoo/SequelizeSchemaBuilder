@@ -189,7 +189,7 @@ const Button = styled.button`
 	${({ copy }) =>
 		copy &&
 		css`
-			background: ${({ theme }) => theme.textsecondary};
+			background: ${({ theme }) => theme.accent};
 			display: flex;
 			align-items: center;
 			justify-content: center;
@@ -197,7 +197,7 @@ const Button = styled.button`
 			font-size: 1.3rem;
 			border-radius: 0.25rem;
 			&:hover {
-				background: ${({ theme }) => theme.text};
+				background: ${({ theme }) => theme.accentHover};
 			}
 		`}
 `
