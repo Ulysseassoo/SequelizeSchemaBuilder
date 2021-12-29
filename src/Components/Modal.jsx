@@ -13,10 +13,11 @@ const Modal = ({ field, setOnOpen, id, exported, data }) => {
 		setValue,
 		formState: { errors }
 	} = useForm()
-	const onSubmit = (data) => {
-		console.log(data)
-		const newData = { ...data, id: state.data[id].properties.length }
+	const onSubmit = (formData) => {
+		console.log(formData)
+		const newData = { ...formData, id: state.data[id].properties.length }
 		dispatch({ type: "add-property", data: newData, id: id })
+		setOnOpen(false)
 	}
 	useEffect(() => {
 		setValue("type", field)
@@ -70,6 +71,10 @@ const Modal = ({ field, setOnOpen, id, exported, data }) => {
 							<label htmlFor="unique">Unique ?</label>
 							<input type="checkbox" id="unique" {...register("unique", {})} />
 						</Center>
+						<Center>
+							<label htmlFor="auto">Auto Incrementation ?</label>
+							<input type="checkbox" id="auto" {...register("autoIncrement", {})} />
+						</Center>
 					</CheckBoxes>
 					<Button special type="submit">
 						Add
@@ -95,13 +100,14 @@ const Container = styled.div`
 
 const Box = styled.div`
 	padding: 1rem;
-	height: 200px;
+	height: 250px;
 	background-color: ${({ theme }) => theme.borders};
 	overflow-y: scroll;
 	color: ${({ theme }) => theme.secondarytext};
 	font-size: 1.1rem;
 	font-style: italic;
 	letter-spacing: 0.1rem;
+	margin: 1rem;
 `
 
 const Header = styled.div`

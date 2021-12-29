@@ -13,14 +13,17 @@ const Sidebar = () => {
 
 	const generateSchema = () => {
 		let schema = []
-		state.data.forEach((model) => {
-			schema.push(`\n const ${model.name} = sequelize.define('${model.name}', { \n`)
+		state.data.forEach((model, index) => {
+			index > 0 && schema.push("\n")
+			schema.push(`const ${model.name} = sequelize.define('${model.name}', { \n`)
 			model.properties.map((property) => {
-				schema.push(`${property.name}: {\n type: DataTypes.${property.type.toUpperCase()}`)
-				property.defaultValue && schema.push(`,\ndefaultValue: ${property.defaultValue}`)
-				property.primaryKey && schema.push(`,\nprimaryKey: true`)
-				property.null && schema.push(`,\nallowNull: true`)
-				schema.push("\n } \n")
+				schema.push(`${property.name}: {\n	type: DataTypes.${property.type.toUpperCase()}`)
+				property.defaultValue && schema.push(`,\n	defaultValue: ${property.defaultValue}`)
+				property.primaryKey && schema.push(`,\n	primaryKey: true`)
+				property.null && schema.push(`,\n	allowNull: true`)
+				property.autoIncrement && schema.push(`,\n	autoIncrement: true`)
+				property.unique && schema.push(`,\n	unique: true`)
+				schema.push("\n     } \n")
 			})
 			schema.push("})")
 		})
@@ -30,6 +33,7 @@ const Sidebar = () => {
 	return (
 		<>
 			{onOpen && <Modal exported setOnOpen={setOnOpen} data={generateSchema()} />}
+			{onOpen && <Overlay />}
 			<Container>
 				<Title>Sequelize Builder</Title>
 				<Scroller>
@@ -48,6 +52,15 @@ const Sidebar = () => {
 		</>
 	)
 }
+
+const Overlay = styled.div`
+	width: 100%;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.4);
+	z-index: 10;
+	position: absolute;
+	inset: 0;
+`
 
 const Container = styled.aside`
 	position: relative;

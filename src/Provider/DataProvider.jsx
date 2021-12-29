@@ -20,21 +20,23 @@ export const DataProvider = (props) => {
 					data: [...state.data, newModel]
 				}
 			}
+			case "delete-model": {
+				const data = state.data.filter((item) => item.id !== action.id)
+				return { ...state, data: data }
+			}
 			case "add-property": {
-				const data = state.data.map((item, i) => (item.id == action.id ? { ...item, properties: [...item.properties, action.data] } : item))
+				const data = state.data.map((item) => (item.id == action.id ? { ...item, properties: [...item.properties, action.data] } : item))
 
-				console.log(data)
 				return { ...state, data: data }
 			}
 			case "delete-property": {
-				const data = state.data.map((item, i) =>
+				const data = state.data.map((item) =>
 					item.id == action.id ? { ...item, properties: item.properties.filter((element) => element.id !== action.property.id) } : item
 				)
-				console.log(data)
 				return { ...state, data: data }
 			}
 			case "update-name": {
-				const data = state.data.map((item, i) => (item.id === action.data.id ? { ...item, name: action.data.name } : item))
+				const data = state.data.map((item) => (item.id === action.data.id ? { ...item, name: action.data.name } : item))
 				return { ...state, data: data }
 			}
 		}
