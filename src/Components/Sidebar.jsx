@@ -16,14 +16,14 @@ const Sidebar = () => {
 		state.data.forEach((model, index) => {
 			index > 0 && schema.push("\n")
 			schema.push(`const ${model.name} = sequelize.define('${model.name}', { \n`)
-			model.properties.map((property) => {
+			model.properties.map((property, i) => {
 				schema.push(`${property.name}: {\n	type: DataTypes.${property.type.toUpperCase()}`)
 				property.defaultValue && schema.push(`,\n	defaultValue: ${property.defaultValue}`)
 				property.primaryKey && schema.push(`,\n	primaryKey: true`)
 				property.null && schema.push(`,\n	allowNull: true`)
 				property.autoIncrement && schema.push(`,\n	autoIncrement: true`)
 				property.unique && schema.push(`,\n	unique: true`)
-				schema.push("\n     } \n")
+				schema.push("\n     }, \n")
 			})
 			schema.push("})")
 		})

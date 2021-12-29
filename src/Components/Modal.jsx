@@ -3,6 +3,8 @@ import styled, { css } from "styled-components"
 import { AiOutlineCloseSquare } from "react-icons/ai"
 import { useForm } from "react-hook-form"
 import { DataContext } from "../Provider/DataProvider"
+import { AiOutlineCopy } from "react-icons/ai"
+import { toast } from "react-toastify"
 
 const Modal = ({ field, setOnOpen, id, exported, data, properties }) => {
 	const context = useContext(DataContext)
@@ -22,6 +24,17 @@ const Modal = ({ field, setOnOpen, id, exported, data, properties }) => {
 	useEffect(() => {
 		setValue("type", field)
 	}, [])
+	const copyToClipboard = () => {
+		navigator.clipboard.writeText(data)
+		toast.success("Copied to Clipboard !", {
+			position: "top-right",
+			autoClose: 800,
+			hideProgressBar: true,
+			closeOnClick: false,
+			pauseOnHover: true,
+			draggable: true
+		})
+	}
 
 	if (exported) {
 		return (
@@ -37,6 +50,11 @@ const Modal = ({ field, setOnOpen, id, exported, data, properties }) => {
 						</pre>
 					</Box>
 				</Body>
+				<Margin>
+					<Button copy onClick={() => copyToClipboard()}>
+						<AiOutlineCopy />
+					</Button>
+				</Margin>
 			</Container>
 		)
 	}
@@ -110,6 +128,10 @@ const Box = styled.div`
 	margin: 1rem;
 `
 
+const Margin = styled.div`
+	margin: 1rem;
+`
+
 const Header = styled.div`
 	padding: 1rem;
 	border-bottom: 1px solid ${({ theme }) => theme.borders};
@@ -163,6 +185,20 @@ const Button = styled.button`
 		special &&
 		css`
 			background: ${({ theme }) => theme.accent};
+		`}
+	${({ copy }) =>
+		copy &&
+		css`
+			background: ${({ theme }) => theme.textsecondary};
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 0.5rem;
+			font-size: 1.3rem;
+			border-radius: 0.25rem;
+			&:hover {
+				background: ${({ theme }) => theme.text};
+			}
 		`}
 `
 
