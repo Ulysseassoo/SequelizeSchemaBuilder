@@ -28,6 +28,9 @@ const Sidebar = () => {
 					schema.push("\n     }, \n")
 				} else {
 					switch (property.relation) {
+						case "OneToOne":
+							relations.push(`\n${model.name}.hasOne(${property.type}) \n${property.type}.belongsTo(${model.name})`)
+							break
 						case "OneToMany":
 							relations.push(`\n${model.name}.hasMany(${property.type}) \n${property.type}.belongsTo(${model.name})`)
 							break
@@ -35,8 +38,10 @@ const Sidebar = () => {
 							relations.push(`\n${property.type}.hasMany(${model.name}) \n${model.name}.belongsTo(${property.type})`)
 							break
 						case "ManyToMany":
+							relations.push(
+								`\n${model.name}.belongsToMany(${property.type}, { through: "${property.name}"}) \n${property.type}.belongsToMany(${model.name}, { through: "${property.name}"})`
+							)
 							break
-
 						default:
 							break
 					}
@@ -45,7 +50,6 @@ const Sidebar = () => {
 			schema.push("})")
 		})
 		schema.push(relations)
-		console.log(schema)
 		return schema.join("")
 	}
 

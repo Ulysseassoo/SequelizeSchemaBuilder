@@ -74,6 +74,7 @@ const Modal = ({ field, setOnOpen, id, exported, data, properties, relation }) =
 						<input type="text" placeholder="name" id="name" {...register("name", { required: true })} />
 						<CheckBoxes>
 							<Select {...register("relation")}>
+								<option value="OneToOne">One To One</option>
 								<option value="OneToMany">One To Many</option>
 								<option value="ManyToOne"> Many To One</option>
 								<option value="ManyToMany"> Many To Many</option>
