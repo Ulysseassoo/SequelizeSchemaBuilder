@@ -7,6 +7,7 @@ import { FiEdit3 } from "react-icons/fi"
 import Field from "../Components/Field"
 import { Fields } from "../Data/Fields"
 import Modal from "../Components/Modal"
+import { IoCube } from "react-icons/io5"
 
 const Model = () => {
 	let params = useParams()
@@ -15,6 +16,7 @@ const Model = () => {
 	const { state, dispatch } = context
 	const [editMode, setEditMode] = useState(false)
 	const [onOpen, setOnOpen] = useState(false)
+	const [onOpenRelation, setOnOpenRelation] = useState(false)
 	const [selectedField, setSelectedField] = useState("")
 	let navigate = useNavigate()
 	useEffect(() => {
@@ -48,7 +50,9 @@ const Model = () => {
 	return (
 		<Section flex="flex" dir="column">
 			{onOpen && <Modal setOnOpen={setOnOpen} field={selectedField} id={id} properties={properties} />}
+			{onOpenRelation && <Modal setOnOpen={setOnOpenRelation} field={selectedField} id={id} properties={properties} relation />}
 			{onOpen && <Overlay />}
+			{onOpenRelation && <Overlay />}
 			<Container>
 				<Top>
 					<Block>
@@ -81,6 +85,18 @@ const Model = () => {
 									key={field.title}
 									setOnOpen={setOnOpen}
 									setSelectedField={setSelectedField}
+								/>
+							))}
+							{state.data.map((field, index) => (
+								<Field
+									Icon={IoCube}
+									title={field.name}
+									description="A Model to make a relation with"
+									key={field.name}
+									data={field}
+									setOnOpen={setOnOpenRelation}
+									setSelectedField={setSelectedField}
+									relation
 								/>
 							))}
 						</FieldContainer>

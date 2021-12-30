@@ -6,9 +6,9 @@ import { DataContext } from "../Provider/DataProvider"
 import { AiOutlineCopy } from "react-icons/ai"
 import { toast } from "react-toastify"
 
-const Modal = ({ field, setOnOpen, id, exported, data, properties }) => {
+const Modal = ({ field, setOnOpen, id, exported, data, properties, relation }) => {
 	const context = useContext(DataContext)
-	const { dispatch, state } = context
+	const { dispatch } = context
 	const {
 		register,
 		handleSubmit,
@@ -55,6 +55,35 @@ const Modal = ({ field, setOnOpen, id, exported, data, properties }) => {
 						<AiOutlineCopy />
 					</Button>
 				</Margin>
+			</Container>
+		)
+	}
+
+	if (relation) {
+		return (
+			<Container>
+				<Header>
+					<Title>New Relation</Title>
+					<AiOutlineCloseSquare onClick={() => setOnOpen(false)} />
+				</Header>
+				<Body>
+					<Form onSubmit={handleSubmit(onSubmit)}>
+						<label htmlFor="type">Field Type</label>
+						<input type="text" placeholder="type" id="type" {...register("type", { disabled: true })} />
+						<label htmlFor="name">Name</label>
+						<input type="text" placeholder="name" id="name" {...register("name", { required: true })} />
+						<CheckBoxes>
+							<Select {...register("relation")}>
+								<option value="OneToMany">One To Many</option>
+								<option value="ManyToOne"> Many To One</option>
+								<option value="ManyToMany"> Many To Many</option>
+							</Select>
+						</CheckBoxes>
+						<Button special type="submit">
+							Add
+						</Button>
+					</Form>
+				</Body>
 			</Container>
 		)
 	}
@@ -154,6 +183,15 @@ const Center = styled.div`
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
+`
+const Select = styled.select`
+	width: 100%;
+	border: none;
+	padding: 0.25rem;
+	border-radius: 0.25rem;
+	border: 1px solid ${({ theme }) => theme.secondarytext};
+	background: white;
+	cursor: pointer;
 `
 
 const CheckBoxes = styled.div`

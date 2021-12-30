@@ -13,20 +13,39 @@ const Sidebar = () => {
 
 	const generateSchema = () => {
 		let schema = []
+		let relations = []
 		state.data.forEach((model, index) => {
 			index > 0 && schema.push("\n")
 			schema.push(`const ${model.name} = sequelize.define('${model.name}', { \n`)
 			model.properties.map((property, i) => {
-				schema.push(`${property.name}: {\n	type: DataTypes.${property.type.toUpperCase()}`)
-				property.defaultValue && schema.push(`,\n	defaultValue: ${property.defaultValue}`)
-				property.primaryKey && schema.push(`,\n	primaryKey: true`)
-				property.null && schema.push(`,\n	allowNull: true`)
-				property.autoIncrement && schema.push(`,\n	autoIncrement: true`)
-				property.unique && schema.push(`,\n	unique: true`)
-				schema.push("\n     }, \n")
+				if (!property.relation) {
+					schema.push(`${property.name}: {\n	type: DataTypes.${property.type.toUpperCase()}`)
+					property.defaultValue && schema.push(`,\n	defaultValue: ${property.defaultValue}`)
+					property.primaryKey && schema.push(`,\n	primaryKey: true`)
+					property.null && schema.push(`,\n	allowNull: true`)
+					property.autoIncrement && schema.push(`,\n	autoIncrement: true`)
+					property.unique && schema.push(`,\n	unique: true`)
+					schema.push("\n     }, \n")
+				} else {
+					switch (property.relation) {
+						case "OneToMany":
+							relations.push(`\n${model.name}.hasMany(${property.type}) \n${property.type}.belongsTo(${model.name})`)
+							break
+						case "ManyToOne":
+							relations.push(`\n${property.type}.hasMany(${model.name}) \n${model.name}.belongsTo(${property.type})`)
+							break
+						case "ManyToMany":
+							break
+
+						default:
+							break
+					}
+				}
 			})
 			schema.push("})")
 		})
+		schema.push(relations)
+		console.log(schema)
 		return schema.join("")
 	}
 

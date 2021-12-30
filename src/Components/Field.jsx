@@ -6,6 +6,7 @@ import { useParams } from "react-router"
 import { DataContext } from "../Provider/DataProvider"
 
 const Field = ({ Icon, title, description, setOnOpen, setSelectedField, isAdded, data }) => {
+	console.log(data)
 	let params = useParams()
 	const { id: modelID } = params
 	if (isAdded === true) {
@@ -18,9 +19,7 @@ const Field = ({ Icon, title, description, setOnOpen, setSelectedField, isAdded,
 		return (
 			<Container isAdded>
 				<Content isAdded>
-					<Left>
-						<Text isAdded>{name}</Text>
-					</Left>
+					<Left>{data.relation ? <Text isAdded>{data.relation}</Text> : <Text isAdded>{name}</Text>}</Left>
 					<RiDeleteBin5Line onClick={() => deleteField()} />
 				</Content>
 				<Content isAdded>
@@ -34,6 +33,7 @@ const Field = ({ Icon, title, description, setOnOpen, setSelectedField, isAdded,
 			</Container>
 		)
 	}
+
 	return (
 		<Container
 			onClick={() => {
