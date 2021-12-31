@@ -6,7 +6,6 @@ import { useParams } from "react-router"
 import { DataContext } from "../Provider/DataProvider"
 
 const Field = ({ Icon, title, description, setOnOpen, setSelectedField, isAdded, data }) => {
-	console.log(data)
 	let params = useParams()
 	const { id: modelID } = params
 	if (isAdded === true) {

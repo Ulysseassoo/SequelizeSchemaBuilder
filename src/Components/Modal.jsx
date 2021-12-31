@@ -16,7 +16,6 @@ const Modal = ({ field, setOnOpen, id, exported, data, properties, relation }) =
 		formState: { errors }
 	} = useForm()
 	const onSubmit = (formData) => {
-		console.log(formData)
 		const newData = { ...formData, id: properties.length }
 		dispatch({ type: "add-property", data: newData, id: id })
 		setOnOpen(false)
