@@ -5,7 +5,7 @@ import { Section } from "../Theme/global"
 const Home = () => {
 	return (
 		<Section center="center" flex="flex" dir="column">
-			<Title>Welcome on Sequelize Builder !</Title>
+			<Title>Welcome on Sequelize Schema Builder !</Title>
 			<ol>
 				<li>Create a model</li>
 				<li>Choose its properties</li>
