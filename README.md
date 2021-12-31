@@ -1,4 +1,4 @@
-# Sequelize Web Builder
+# Sequelize Schema Builder
 
 Build your whole Sequelize schema with this web interface.
 
