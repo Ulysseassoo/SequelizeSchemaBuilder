@@ -55,17 +55,6 @@ export const DataProvider = (props) => {
 		}),
 		[state]
 	)
-	// useEffect(() => {
-	// 	const token = localStorage.getItem("token")
-	// 	if (!token) {
-	// 		return
-	// 	}
-	// 	getOrders(token)
-	// 	return () => setIsLoading(true)
-	// }, [navigate])
-	useEffect(() => {
-		console.log(state)
-	}, [state])
 
 	return <DataContext.Provider value={dataMemo}>{props.children}</DataContext.Provider>
 }

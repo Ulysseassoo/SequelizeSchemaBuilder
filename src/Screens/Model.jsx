@@ -70,14 +70,14 @@ const Model = () => {
 				</Top>
 				<Bottom>
 					<Left>
-						{properties.map((field, index) => (
+						{properties.map((field) => (
 							<Field title={field.name} description={field.type} key={field.name} isAdded data={field} />
 						))}
 					</Left>
 					<Right>
 						<Title>Add a new field</Title>
 						<FieldContainer>
-							{Fields.map((field, index) => (
+							{Fields.map((field) => (
 								<Field
 									Icon={field.Icon}
 									title={field.title}
@@ -87,7 +87,7 @@ const Model = () => {
 									setSelectedField={setSelectedField}
 								/>
 							))}
-							{state.data.map((field, index) => (
+							{state.data.map((field) => (
 								<Field
 									Icon={IoCube}
 									title={field.name}
